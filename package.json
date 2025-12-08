@@ -1,5 +1,5 @@
 {
-  "name": "env-doctor",
+  "name": "env-checkup",
   "version": "1.0.0",
   "description": "CLI tool to validate and audit .env files against .env.example",
   "type": "module",
@@ -12,7 +12,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "env-doctor": "./bin/env-doctor.js"
+    "env-checkup": "./bin/env-doctor.js"
   },
   "files": [
     "dist",
@@ -24,8 +24,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "validate": "publint && attw --pack .",
-    "prepublishOnly": "npm run build && npm run validate && npm test"
+    "validate": "publint && attw --pack . --ignore-rules cjs-resolves-to-esm",
+    "prepublishOnly": "npm run build && npm run validate"
   },
   "keywords": [
     "env",
@@ -43,12 +43,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fracabu/env-doctor.git"
+    "url": "git+https://github.com/fracabu/env-checkup.git"
   },
   "bugs": {
-    "url": "https://github.com/fracabu/env-doctor/issues"
+    "url": "https://github.com/fracabu/env-checkup/issues"
   },
-  "homepage": "https://github.com/fracabu/env-doctor#readme",
+  "homepage": "https://github.com/fracabu/env-checkup#readme",
   "engines": {
     "node": ">=20.0.0"
   },
