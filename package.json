@@ -1,5 +1,5 @@
 {
-  "name": "env-checkup",
+  "name": "@fracabu/env-checkup",
   "version": "1.0.0",
   "description": "CLI tool to validate and audit .env files against .env.example",
   "type": "module",
