@@ -1,0 +1,1 @@
+ Poi dobbiamo modificare anche i file complessivi: gli indici, il resume e tutto quanto. Adesso ti passo i tre file di admin, anzi te ne passo due soli, plugin. 

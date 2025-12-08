@@ -1,0 +1,66 @@
+{
+  "name": "env-doctor",
+  "version": "1.0.0",
+  "description": "CLI tool to validate and audit .env files against .env.example",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "env-doctor": "./bin/env-doctor.js"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test": "tap",
+    "lint": "eslint",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "validate": "publint && attw --pack .",
+    "prepublishOnly": "npm run build && npm run validate && npm test"
+  },
+  "keywords": [
+    "env",
+    "dotenv",
+    "environment",
+    "variables",
+    "validate",
+    "validation",
+    "audit",
+    "cli",
+    "ci",
+    "devops"
+  ],
+  "author": "fracabu (Francesco Capurso)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fracabu/env-doctor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fracabu/env-doctor/issues"
+  },
+  "homepage": "https://github.com/fracabu/env-doctor#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.0",
+    "@types/node": "^22.10.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.4.0",
+    "publint": "^0.2.12",
+    "tap": "^21.0.0",
+    "tsdown": "^0.4.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.16.0"
+  }
+}
