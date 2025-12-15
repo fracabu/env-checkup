@@ -1,275 +1,145 @@
-# env-doctor
+<h1 align="center">env-doctor</h1>
+<h3 align="center">Validate, audit, and sync .env files</h3>
 
-[![npm version](https://img.shields.io/npm/v/env-doctor.svg)](https://www.npmjs.com/package/env-doctor)
-[![CI](https://github.com/fracabu/env-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/fracabu/env-doctor/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
+<p align="center">
+  <em>Zero-dependency CLI tool to check .env against .env.example</em>
+</p>
 
-> A zero-dependency CLI tool to validate, audit, and sync `.env` files against `.env.example`
+<p align="center">
+  <a href="https://www.npmjs.com/package/env-doctor"><img src="https://img.shields.io/npm/v/env-doctor.svg" alt="npm version" /></a>
+  <img src="https://github.com/fracabu/env-doctor/actions/workflows/ci.yml/badge.svg" alt="CI" />
+  <img src="https://img.shields.io/badge/Node.js-20%2B-green.svg" alt="Node.js" />
+  <img src="https://img.shields.io/badge/TypeScript-5.7-blue.svg" alt="TypeScript" />
+</p>
 
-## Why env-doctor?
+<p align="center">
+  :gb: <a href="#english">English</a> | :it: <a href="#italiano">Italiano</a>
+</p>
 
-Environment variable misconfigurations are a common source of deployment failures and debugging headaches:
+---
+
+## Overview
+
+<!-- ![env-doctor Overview](assets/env-doctor-overview.png) -->
+
+---
+
+<a name="english"></a>
+## :gb: English
+
+### Why env-doctor?
 
 | Problem | Impact |
 |---------|--------|
-| Missing variables | Deploy fails, app crashes at runtime |
+| Missing variables | Deploy fails, app crashes |
 | Undocumented variables | Team confusion, security risks |
-| Empty values | Silent failures, unexpected behavior |
-| Sync issues | "Works on my machine" syndrome |
+| Empty values | Silent failures |
+| Sync issues | "Works on my machine" |
 
-**env-doctor** catches all of these issues with a single command.
-
-## Features
+### Features
 
 - **Zero dependencies** - Lightweight and fast
-- **Pure ESM** - Modern JavaScript module system
-- **TypeScript** - Full type definitions included
+- **Pure ESM** - Modern JavaScript
+- **TypeScript** - Full type definitions
 - **CI/CD ready** - Exit codes for automation
-- **Multiple output formats** - Human-readable or JSON
-- **Library API** - Use programmatically in your code
+- **Multiple formats** - Human-readable or JSON
+- **Library API** - Use programmatically
 
-## Installation
-
-```bash
-# Run directly with npx (no install needed)
-npx env-doctor
-
-# Or install globally
-npm install -g env-doctor
-
-# Or as a dev dependency
-npm install -D env-doctor
-```
-
-## Quick Start
+### Install
 
 ```bash
-# Basic usage - checks .env against .env.example
-env-doctor
-
-# Output:
-# env-doctor v1.0.0
-# Checking .env against .env.example...
-#
-# ✗ Missing (2):
-#   • DATABASE_URL
-#   • API_SECRET
-#
-# ⚠ Extra (1):
-#   • OLD_DEPRECATED_VAR
-#
-# Result: FAILED (missing required variables)
+npx env-doctor        # Run directly
+npm install -g env-doctor  # Or install globally
 ```
 
-## CLI Usage
+### Usage
 
 ```bash
-# Custom file paths
-env-doctor --env .env.production --example .env.template
-
-# CI mode - exit code 1 on missing variables
-env-doctor --ci
-
-# JSON output for scripting
-env-doctor --json
-
-# Quiet mode - errors only
-env-doctor --quiet
-
-# Combine options
-env-doctor --ci --json --env .env.staging
+env-doctor                    # Basic check
+env-doctor --ci               # CI mode (exit 1 on missing)
+env-doctor --json             # JSON output
+env-doctor --env .env.prod    # Custom paths
 ```
 
-### Options
-
-| Option | Alias | Default | Description |
-|--------|-------|---------|-------------|
-| `--env` | `-e` | `.env` | Path to environment file |
-| `--example` | `-x` | `.env.example` | Path to example/template file |
-| `--ci` | | `false` | CI mode: exit 1 on missing variables |
-| `--json` | `-j` | `false` | Output as JSON |
-| `--quiet` | `-q` | `false` | Only show errors |
-| `--no-color` | | `false` | Disable colored output |
-| `--help` | `-h` | | Show help |
-| `--version` | `-v` | | Show version |
-
-### Exit Codes
-
-| Code | Meaning |
-|------|---------|
-| `0` | All checks passed |
-| `1` | Missing variables found (CI mode only) |
-| `2` | File not found or parse error |
-
-## Library API
-
-Use env-doctor programmatically in your Node.js applications:
+### Library API
 
 ```typescript
-import { validate, parse } from 'env-doctor'
+import { validate } from 'env-doctor'
 
-// Full validation
 const result = await validate({
   envPath: '.env',
   examplePath: '.env.example'
 })
 
-console.log(result.valid)      // boolean
-console.log(result.missing)    // string[] - vars in example but not in env
-console.log(result.extra)      // string[] - vars in env but not in example
-console.log(result.empty)      // string[] - vars with empty values
-
-// Just parse a file
-const { vars } = await parse('.env')
-console.log(vars) // { DATABASE_URL: '...', PORT: '3000' }
+console.log(result.missing)  // ['DATABASE_URL', 'API_SECRET']
+console.log(result.extra)    // ['OLD_VAR']
 ```
 
-### TypeScript Types
+---
 
-```typescript
-import type {
-  ValidationResult,
-  ValidateOptions,
-  ParseResult
-} from 'env-doctor'
-```
+<a name="italiano"></a>
+## :it: Italiano
 
-## CI/CD Integration
+### Perche env-doctor?
 
-### GitHub Actions
+| Problema | Impatto |
+|----------|---------|
+| Variabili mancanti | Deploy fallisce, app crasha |
+| Variabili non documentate | Confusione team, rischi sicurezza |
+| Valori vuoti | Fallimenti silenziosi |
+| Problemi sync | "Funziona sulla mia macchina" |
 
-```yaml
-jobs:
-  validate-env:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Validate environment variables
-        run: npx env-doctor --ci
-```
+### Funzionalita
 
-### Pre-commit Hook
+- **Zero dipendenze** - Leggero e veloce
+- **Pure ESM** - JavaScript moderno
+- **TypeScript** - Definizioni di tipo complete
+- **CI/CD ready** - Exit code per automazione
+- **Formati multipli** - Leggibile o JSON
+- **API Library** - Usa programmaticamente
 
-```json
-{
-  "scripts": {
-    "precommit": "env-doctor --ci"
-  }
-}
-```
-
-### GitLab CI
-
-```yaml
-validate-env:
-  script:
-    - npx env-doctor --ci
-```
-
-## Parser Features
-
-env-doctor handles all common `.env` file formats:
+### Installazione
 
 ```bash
-# Basic key=value
-DATABASE_URL=postgres://localhost:5432/mydb
-
-# Quoted values (preserves spaces)
-MESSAGE="Hello World"
-PASSWORD='secret with spaces'
-
-# Empty values (detected as warning)
-OPTIONAL_VAR=
-
-# Comments
-# This is a comment
-API_KEY=secret123  # Inline comment
-
-# Export prefix (stripped automatically)
-export NODE_ENV=production
-
-# Values with special characters
-CONNECTION_STRING="host=localhost;port=5432"
+npx env-doctor        # Esegui direttamente
+npm install -g env-doctor  # O installa globalmente
 ```
 
-## JSON Output Format
-
-```json
-{
-  "valid": false,
-  "summary": {
-    "total": 10,
-    "valid": 8,
-    "missing": 2,
-    "extra": 1,
-    "empty": 1
-  },
-  "missing": ["DATABASE_URL", "API_SECRET"],
-  "extra": ["OLD_VAR"],
-  "empty": ["OPTIONAL"],
-  "variables": {
-    "PORT": "3000",
-    "NODE_ENV": "development"
-  }
-}
-```
-
-## Requirements
-
-- Node.js 20.0.0 or higher
-- ESM support (native in Node.js 20+)
-
-## Development
+### Utilizzo
 
 ```bash
-# Clone the repository
-git clone https://github.com/fracabu/env-doctor.git
-cd env-doctor
-
-# Install dependencies
-npm install
-
-# Build
-npm run build
-
-# Run tests
-npm test
-
-# Lint
-npm run lint
-
-# Type check
-npm run typecheck
+env-doctor                    # Check base
+env-doctor --ci               # Modalita CI (exit 1 se mancanti)
+env-doctor --json             # Output JSON
+env-doctor --env .env.prod    # Percorsi custom
 ```
 
-## Tech Stack
+### CI/CD Integration
 
-- **Runtime**: Node.js 20+
-- **Language**: TypeScript 5.7
-- **Module System**: Pure ESM
-- **Build Tool**: tsdown (Rolldown-powered)
-- **Test Framework**: tap
-- **Linting**: ESLint 9 (flat config)
+```yaml
+# GitHub Actions
+- name: Validate env
+  run: npx env-doctor --ci
+```
 
-## Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Exit Codes
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+| Code | Meaning |
+|------|---------|
+| `0` | All checks passed |
+| `1` | Missing variables (CI mode) |
+| `2` | File not found |
 
 ## License
 
-MIT © [Francesco Capurso](https://github.com/fracabu)
+MIT
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/fracabu">fracabu</a>
+  <a href="https://github.com/fracabu">
+    <img src="https://img.shields.io/badge/Made_by-fracabu-8B5CF6?style=flat-square" alt="Made by fracabu" />
+  </a>
 </p>
-
